@@ -2,18 +2,22 @@ import streamlit as st
 import numpy as np
 from PIL import Image
 
+# EXAMPLE
+# Adjust to your camera.
 INTRINSIC_MATRIX = np.matrix(
 [[903.29304297,   0.,         647.28747544],
  [  0.,         904.78000567, 358.91564315],
  [  0.,           0.,           1.,        ]])
 
+# Adjust if camera is not the center of the coordinate system.
 EXTRINSIC_MATRIX =  [[1, 0, 0, 0],
     [0, 1, 0, 0],
     [0, 0, 1, 0]]
 
 # Width of the squared point
-WIDTH = 8
+WIDTH = 4
 
+# Create a place to store the points.
 if 'points' not in st.session_state:
     st.session_state['points'] = []
 
@@ -52,7 +56,6 @@ positionZ = st.sidebar.slider("Position Z", 10, 100, 30, 1)
 homogeneous3D = np.matrix([positionX, positionY, positionZ, 1]).T
 homogeneous2D = projectionMatrix * homogeneous3D
 point2D = homogeneous2D[:-1] / homogeneous2D[-1]
-print(point2D)
 pictureX = int(point2D[0])
 pictureY = int(point2D[1])
 
@@ -70,7 +73,7 @@ try:
 
     putPixelOnPhoto(pictureX, pictureY, uploadedImage)
 
-    
+    # Print previously saved points.
     for i,j in st.session_state['points']:
         putPixelOnPhoto(i, j, uploadedImage)
 
@@ -82,4 +85,4 @@ try:
         st.session_state['points'] = []
 
 except:
-    print("No file uploaded or sth else")
+    print("No file uploaded yet.")
