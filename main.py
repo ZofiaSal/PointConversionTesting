@@ -15,7 +15,7 @@ EXTRINSIC_MATRIX =  [[1, 0, 0, 0],
     [0, 0, 1, 0]]
 
 # Width of the squared point
-WIDTH = 4
+WIDTH = 10
 
 # Create a place to store the points.
 if 'points' not in st.session_state:
@@ -36,7 +36,7 @@ def putPixelOnPhoto( picX, picY, image):
                 N[(sizeY - picY - WIDTH):(sizeY - picY), (sizeX - picX - WIDTH):(sizeX - picX)] = 1
 
 def addSaveButton():
-    if st.button('Save the point'):
+    if st.sidebar.button('Save the point'):
         if 'points' not in st.session_state:
             st.session_state['points'] = []
         st.session_state['points'].append((pictureX,pictureY))
@@ -59,12 +59,14 @@ point2D = homogeneous2D[:-1] / homogeneous2D[-1]
 pictureX = int(point2D[0])
 pictureY = int(point2D[1])
 
-# Add the uploader of photos.
-uploadedImageFile = st.file_uploader("Image")
-
 # This element will be filled in later, so we create a placeholder
 # for it using st.empty().
 image = st.empty()
+
+# Add the uploader of photos.
+uploadedImageFile = st.file_uploader("Image")
+
+
 
 # Try getting a photo to show.
 try:
@@ -81,7 +83,7 @@ try:
 
     addSaveButton()
 
-    if st.button('Clear all points'):
+    if st.sidebar.button('Clear all points'):
         st.session_state['points'] = []
 
 except:
