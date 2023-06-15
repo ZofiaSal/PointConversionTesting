@@ -15,7 +15,7 @@ EXTRINSIC_MATRIX =  [[1, 0, 0, 0],
     [0, 0, 1, 0]]
 
 # Width of the squared point
-WIDTH = 4
+WIDTH = 6
 
 # Create a place to store the points.
 if 'points' not in st.session_state:
